@@ -97,7 +97,11 @@ async function generateResume(personName: string) {
           console.log(block.text);
         }
         if (block.type === 'tool_use') {
-          console.log(`\n🔧 Using tool: ${block.name}`);
+          if (block.name === 'WebSearch' && block.input && typeof block.input === 'object' && 'query' in block.input) {
+            console.log(`\n🔍 Searching: "${block.input.query}"`);
+          } else {
+            console.log(`\n🔧 Using tool: ${block.name}`);
+          }
         }
       }
     }
